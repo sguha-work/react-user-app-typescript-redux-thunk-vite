@@ -15,6 +15,18 @@ class UserServiceClass {
             });
         }
     }
+    public async fetchUserDetails(id: string){
+        try {
+            const data = await AjaxService.get(`https://jsonplaceholder.typicode.com/users/${id}`);
+            USERS_STORE.dispatch((dispatch) => {
+                dispatch({ type: USER_ACTIONS.FETCH_USER_DETAILS_COMPLETE, payload: data, error: null });
+            });
+        } catch(error) {
+            USERS_STORE.dispatch((dispatch) => {
+                dispatch({ type: USER_ACTIONS.FETCH_USER_DETAILS_COMPLETE, payload: null, error });
+            });
+        }
+    }
 }
 const UserService = new UserServiceClass();
 export default UserService;

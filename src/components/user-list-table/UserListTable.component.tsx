@@ -1,11 +1,11 @@
 import React from 'react'
-import './UserDetailsTable.component.css';
-import User from './../../interfaces/user.interface';
+import './UserListTable.component.css';
+import User from '../../interfaces/user.interface';
 import { Link } from 'react-router-dom';
-export default function UserDetailsTableComponent(props: any) {
+export default function UserListTableComponent(props: any) {
   return (
     <>
-    <div>UserDetailsTable.component</div>
+    <div>UserListTable.component</div>
     <table className="table_users">
       <thead>
         <tr>
