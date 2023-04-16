@@ -5,6 +5,7 @@ import USER_ACTIONS from '../../store/user/User.actions';
 
 export default function ListUserPageComponent() {
   const [users, setUsers] = useState([]);
+  let unsubscribe: Function | null = null;
   useEffect(() => {
     USERS_STORE.dispatch((dispatch) => {
       if (USERS_STORE.getState()['users'].length) {
@@ -15,10 +16,16 @@ export default function ListUserPageComponent() {
       }
     });
 
-    USERS_STORE.subscribe(() => {console.log('subscription called');
+    unsubscribe = USERS_STORE.subscribe(() => {
+      console.log('subscription called');
       setUsers(USERS_STORE.getState()['users']);
     });
   }, []);
+  useEffect(() => () => {
+    if (unsubscribe != null) {
+      unsubscribe();
+    }
+  });
   return (
     <div>
       <h2>List User page component</h2>

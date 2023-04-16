@@ -6,19 +6,22 @@ import UserDetailsComponent from '../../components/user-details/UserDetails.comp
 export default function UserDetailsPageComponent() {
   const { id } = useParams();
   const [userDetails, setUserDetails] = useState(null);
+  let unsubscribe: Function | null = null;
   useEffect(() => {
     // dispatching the action to fetch user details
     USERS_STORE.dispatch((dispatch) => {
       dispatch({ type: USER_ACTIONS.FETCH_USER_DETAILS, payload: { id } });
     });
-    USERS_STORE.subscribe(() => {
+    unsubscribe = USERS_STORE.subscribe(() => {
       console.log('subscription called from userdeatils');
       setUserDetails(USERS_STORE.getState()['userDetails']);
     });
   }, []);
-  useEffect(()=>{
-    return ()=>{
-      USERS_STORE.subscribe(()=>{});
+  useEffect(() => {
+    return () => {
+      if (unsubscribe != null) {
+        unsubscribe();
+      }
     }
   })
   return (
